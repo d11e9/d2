@@ -1,0 +1,7 @@
+// param 0: action
+if msg.data[0] == "create":
+  // param 1: content hash
+  contract.storage[msg.sender] = msg.data[1]
+  return(1)
+else:
+  return(0)
