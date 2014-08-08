@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>d2 App</title>
+	</head>
+	<body onload="init();">
+
+		<p>
+			<label>Update<input type="checkbox" id="update" checked onclick="init();" /></label>
+		</p>
+
+		<p><a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Documentation</a> (<a href="#">Why a Magnet Link?</a>)</p>
+
+		<h1>d2</h1>
+
+		<form action="">
+			<h4>View</h4>
+			<input type="text" id="view-address" placeholder="Address" value="asdasd">
+			<button onclick="handleViewClick();">View</button>
+			<div id="view-output">
+				<p>Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a></p>
+				<p>Content hash</p>
+				<textarea name="" id="" cols="30" rows="10">magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc</textarea>
+				
+			</div>
+		</form>
+
+		<script type="text/javascript">
+
+			var D2_CONTRACT_ADDRESS = "asdasd"
+
+			function view(address) {
+				console.log( 'view', address )
+				var content_hash = eth.getStorageAt( D2_CONTRACT_ADDRESS, address ) or "Not ETH Connection"
+			}
+
+			function handleViewClick() {
+				document.querySelector("#view-output").innerHTML = view( document.querySelector("#view-address").value );
+			}
+
+			function init() {
+				eth.getKey(function(key){
+					document.querySelector("#key").innerHTML = key;
+				})
+
+				document.querySelector("#debug").innerHTML = "";
+				for (var x in eth) {
+					// document.querySelector("#debug").innerHTML += "<strong>" + x + "</strong><pre>, " + eth[x].toString() + "</pre><br/>";
+				}
+
+				setTimeout( function(){
+					if (document.querySelector("#update").checked ) init()
+				}, 1000 );
+			}
+
+		</script>
+	</body>
+</html>
+
