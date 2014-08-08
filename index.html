@@ -1,29 +1,151 @@
 <html>
 	<head>
 		<title>d2 App</title>
+		<style>
+
+			html, body {
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+				background-color: #B3D1FF;
+				font-size: 10px;
+			}
+			#header {
+				overflow: auto;
+				padding: 1em;
+				color: white;
+				background-color: #6AB8EC;
+				border-bottom: 1px solid rgba( 0,0,0, 0.3);
+
+			}
+			#header a {
+				color: white;
+			}
+			#header h1 {
+				font-size: 2em;
+				float: left;
+				margin: 0;
+				line-height: 1.2em;
+			}
+			#header .info {
+				float: right;
+				font-size: 1.2em;
+				line-height: 2em;
+			}
+			
+
+			#content {
+				
+				padding: 1em;
+			}
+
+
+			#content #view-form {
+				height: 3em;
+				overflow: auto;
+				position: relative;
+				font-size: 1.6em;
+			}
+			#content #view-form input {
+				display: inline-block;
+				font-size: inherit;
+				border-radius: 0.4em;
+				position: absolute;
+				left: 0;
+				padding: 0.4em;
+				width: 70%;
+				box-sizing: border-box;
+				border: 1px solid rgba( 0,0,0, 0.3);
+				text-overflow: ellipsis;
+			}
+			#content #view-form button {
+				display: inline-block;
+				font-size: inherit;
+				position: absolute;
+				border-radius: 0.4em;
+				right: 0;
+				padding: 0.4em;
+				width: 25%;
+				box-sizing: border-box;
+				border: 0 none;
+				background-color: #347ABB;
+				font-weight: bold;
+				color: white;
+				cursor: pointer;
+			}
+
+			#content #view-output {
+				font-size: 1.6em;
+				min-height: 10em;
+				padding: 1em;
+				border-radius: 0.4em;
+				border: 1px solid rgba(0, 0, 0, 0.3);
+				background-color: white;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			#warning {
+				padding: 1em 1em 0 1em;
+			}
+
+			#warning.hide { display: none; }
+
+			#warning .content {
+				font-size: 1.6em;
+				border: 1px solid rgb(211, 0, 0);
+				background-color: rgb(233, 59, 59);
+				color: white;
+				padding: 0.4em;
+			}
+			
+			#demo-output { display: none; }
+
+		</style>
 	</head>
 	<body onload="init();">
 
-		<p>
-			<label>Update<input type="checkbox" id="update" checked onclick="init();" /></label>
-		</p>
+		<div id="header">
+			<h1>Dox</h1>
+			<div class="info">
+				<a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">
+					Documentation
+				</a>
+				(<a href="#" title="No torrent support yet in EtheremClient">Why a Magnet Link?</a>)
+			</div>			
+		</div>
 
-		<p><a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Documentation</a> (<a href="#">Why a Magnet Link?</a>)</p>
+		<div id="warning" class="hide">
+			<div class="content"></div>
+		</div>
 
-		<h1>d2</h1>
-
-		<form action="">
-			<h4>View</h4>
-			<input type="text" id="view-address" placeholder="Address" value="asdasd">
-			<button onclick="handleViewClick();">View</button>
-			<div id="view-output">
-				<p>Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a></p>
-				<p>Content hash</p>
-				<textarea name="" id="view-output" cols="30" rows="10">magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc</textarea>
-				
+		<div id="content">
+			<div id="view-form">
+				<input class="" type="text" value="12a3a3Ia43L5UAsaGSIDd" placeholder="Address">
+				<button class="submit" onclick="handleViewClick();">View</button>
 			</div>
-		</form>
+			<div id="view-output">
+				
+				
 
+			</div>
+		</div>
+
+
+
+
+
+		<div id="demo-output">
+				
+			Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a>
+
+			<p>
+				<code>
+					magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc
+				</code>
+			</p>
+
+		</div>
 		<script type="text/javascript">
 
 			var D2_CONTRACT_ADDRESS = "asdasd";
@@ -35,10 +157,23 @@
 			}
 
 			function handleViewClick() {
-				document.querySelector("#view-output").innerHTML = content_hash( document.querySelector("#view-address").value );
+				if ( true ) {
+					document.querySelector("#feedback").className = ''
+					document.querySelector("#feedback .content").innerHTML = "Not connected, showing demo documentation in the meantime";
+					return;
+				}
+				document.querySelector("#view-output").innerHTML = document.querySelector("#demo-output").innerHTML;
 			}
 
 			function init() {
+
+				if (typeof eth ==='undefined') {
+					document.querySelector("#warning").className = ''
+					document.querySelector("#warning .content").innerHTML = "No ETH Object Available. Dox must be run within an Ethereum Browser.";
+					return;
+				}
+
+
 				eth.getKey(function(key){
 					document.querySelector("#key").innerHTML = key;
 				})
