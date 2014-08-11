@@ -15,7 +15,9 @@
   // Your actual module
 
   var checkClient = function(eth) {
-    return 'ethereal';
+    var UA = window.navigator.userAgent;
+    if (UA.match( 'Aleth' )) return 'aleth';
+    if (UA.match( 'Ethereal')) return 'ethereal'
   }
 
   return polyeth = function(eth){
@@ -25,21 +27,23 @@
       getKey: function(cb){ cb('MockKey213dsf3454as')}
     }
 
-    var aleth = {
-      eth: eth,
-      getKey: function(cb){ cb( eth.getKey() )}
-    }
+    var clients = {
+      aleth: {
+        eth: eth,
+        client: 'aleth',
+        getKey: function(cb){ return cb(eth.key); }
+      },
 
-    var ethereal = {
-      eth: eth,
-      getKey: function(cb){ eth.getKey(cb); }
+      ethereal: {
+        eth: eth,
+        client: 'ethereal',
+        getKey: function(cb){ return eth.getKey(cb); }
+      }
     }
 
     if (!eth) return mocketh;
     
     console.log( 'Polyeth loaded. wrapping/polyfilling native eth object.');
-    client = checkClient(eth);
-    if ( client === 'ethereal' ) return ethereal;
-    else return aleth;
+    return clients[checkClient(eth)]
   };
 }));
