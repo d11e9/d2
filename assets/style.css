@@ -1,0 +1,114 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #B3D1FF;
+    font-size: 10px;
+}
+#header {
+    overflow: auto;
+    padding: 1em;
+    color: white;
+    background-color: #6AB8EC;
+    border-bottom: 1px solid rgba( 0,0,0, 0.3);
+
+}
+#header a {
+    color: white;
+}
+#header h1 {
+    font-size: 2em;
+    float: left;
+    margin: 0;
+    line-height: 1.2em;
+}
+#header .info {
+    float: right;
+    font-size: 1.2em;
+    line-height: 2em;
+}
+
+
+#content {
+    padding: 0 1em 1em 1em;
+}
+
+
+#content #view-form {
+    height: 3em;
+    overflow: auto;
+    position: relative;
+    font-size: 1.6em;
+}
+#content #view-form input {
+    display: inline-block;
+    font-size: inherit;
+    border-radius: 0.4em;
+    position: absolute;
+    left: 0;
+    padding: 0.4em;
+    width: 70%;
+    box-sizing: border-box;
+    border: 1px solid rgba( 0,0,0, 0.3);
+    text-overflow: ellipsis;
+}
+#content #view-form button {
+    display: inline-block;
+    font-size: inherit;
+    position: absolute;
+    border-radius: 0.4em;
+    right: 0;
+    padding: 0.4em;
+    width: 25%;
+    box-sizing: border-box;
+    border: 0 none;
+    background-color: #347ABB;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+#content #view-output {
+    font-size: 1.6em;
+    min-height: 10em;
+    padding: 1em;
+    border-radius: 0.4em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: white;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#warning, #debug-output {
+    padding: 1em 1em 0 1em;
+}
+
+.output:empty { display: none; }
+
+.output > * {
+    font-size: 1.6em;               
+    padding: 0.4em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.output .close {
+    position: absolute;
+    right: 0.6em;
+    top: 0.6em;
+    cursor: pointer;
+}
+
+
+.output .warning {
+    border: 1px solid rgb(211, 0, 0);
+    background-color: rgb(233, 59, 59);
+    color: white;
+}
+.output .success {
+    border: 1px solid rgb(0, 211, 51);
+    background-color: rgb(59, 233, 94);
+    color: white;
+}
+
+#demo-output { display: none; }
