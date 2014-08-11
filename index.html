@@ -5,14 +5,13 @@
         <script src="assets/jquery-1.10.2.js"></script>
         <link rel="stylesheet" href="assets/style.css">
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-        <script src="http://localhost:9091/transmission/web/script/min/transmission.js?v=20130913"></script>
     </head>
     <body onload="init();">
 
         <div id="header">
             <h1><i class="fa fa-file-text-o"></i> Dox</h1>
             <div class="info">
-                <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">
+                <a class="magnet" href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">
                     Documentation
                 </a>
                 (<a href="#" title="No torrent support yet in EtheremClient">Why a Magnet Link?</a>)
@@ -43,7 +42,7 @@
         </div>
 
         <div id="demo-output">              
-            Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a>
+            Documentation for (ADDRESS): <a class="magnet" href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a>
             <p>
                 <code>
                     magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc
@@ -55,6 +54,7 @@
         <script type="text/javascript">
 
             var D2_CONTRACT_ADDRESS = "asdasd";
+            var TRANSMISSION_SESSION_ID = 'X3bTJ7rAG00qNANlPZemveZTdq0H4kWYNq3NWw5h3vLQVdCo';
 
             function content_hash(address) {
                 alert( 'content_hash for ' + address )
@@ -82,7 +82,26 @@
                 }
             }
 
-            function fetchTorrentData ( sessionId ) {
+            function handleMagnetLinkClick (ev) {
+                ev.preventDefault();
+                var $el = jQuery( this );
+                var magnetLink = $el.attr( 'href' );
+
+                addTorrent( magnetLink );
+                return false
+            }
+
+            function addTorrent (link) {
+                console.log( 'add torrent ', link)
+                fetchTorrentData({
+                   "arguments": {
+                        "filename": link
+                   },
+                   "method": "torrent-add"
+                });
+            }
+
+            function fetchTorrentData ( data ) {
                 jQuery.ajax({
                     // transmission daemon REST api
                     url: 'http://localhost:9292/localhost:9091/transmission/rpc',
@@ -92,15 +111,9 @@
                     dataType: 'json',
                     cache: false,
                     beforeSend: function(xhr) {
-                        xhr.setRequestHeader( 'X-Transmission-Session-Id', sessionId );
+                        xhr.setRequestHeader( 'X-Transmission-Session-Id', TRANSMISSION_SESSION_ID );
                     },
-                    data: {
-                       "arguments": {
-                           "fields": [ "id", "name", "totalSize" ],
-                           "ids": [ 7, 10 ]
-                       },
-                       "method": "torrent-get"
-                    },
+                    data: JSON.stringify( data ),
                     error: function(res) {
                         console.log( res )
                         output( '#debug-output', 'warning', "Transmission RPC Error: " + res + ". Most likely due to CORS restrictions. Use corsproxy." );
@@ -125,12 +138,14 @@
 
                 jQuery('#view-form button').click( handleViewClick );
 
+                jQuery('body').on( 'click', 'a.magnet', handleMagnetLinkClick )
+
                 e.getKey( function(key){
                     output( "#debug-output", 'success', 'Ethereum Key: ' + key );
                 });
 
 
-                fetchTorrentData('X3bTJ7rAG00qNANlPZemveZTdq0H4kWYNq3NWw5h3vLQVdCo');
+                
                 
             }
             
