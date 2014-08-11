@@ -5,6 +5,7 @@
         <script src="assets/jquery-1.10.2.js"></script>
         <link rel="stylesheet" href="assets/style.css">
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <script src="http://localhost:9091/transmission/web/script/min/transmission.js?v=20130913"></script>
     </head>
     <body onload="init();">
 
@@ -81,6 +82,36 @@
                 }
             }
 
+            function fetchTorrentData ( sessionId ) {
+                jQuery.ajax({
+                    // transmission daemon REST api
+                    url: 'http://localhost:9292/localhost:9091/transmission/rpc',
+                    type: 'POST',
+                    method: 'POST',
+                    contentType: 'json',
+                    dataType: 'json',
+                    cache: false,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader( 'X-Transmission-Session-Id', sessionId );
+                    },
+                    data: {
+                       "arguments": {
+                           "fields": [ "id", "name", "totalSize" ],
+                           "ids": [ 7, 10 ]
+                       },
+                       "method": "torrent-get"
+                    },
+                    error: function(res) {
+                        console.log( res )
+                        output( '#debug-output', 'warning', "Transmission RPC Error: " + res + ". Most likely due to CORS restrictions. Use corsproxy." );
+                    },
+                    success: function(res) {
+                        console.log( res )
+                        output( '#debug-output', 'success', "Transmission RPC: " + res.result );
+                    }
+                });
+            }
+
             function initUI () {
                 
                 if (typeof eth === 'undefined') {
@@ -90,33 +121,16 @@
                     var e = polyeth(eth)
                 }
 
-                if (e.eth) output( '#feedback', 'success', "Polyeth loaded, proxying eth." );
-                else output( '#feedback', 'success', "Polyeth Not loaded, mocking eth." );
-
 
 
                 jQuery('#view-form button').click( handleViewClick );
 
                 e.getKey( function(key){
-                    output( "#debug-output", 'success', 'Key: ' + key );
+                    output( "#debug-output", 'success', 'Ethereum Key: ' + key );
                 });
 
-                $.ajaxSetup({
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('X-Transmission-Session-Id', 'X7IoQTkCsQliKn4cLQVPbxgwRNiodmdJBWynBntiMRb6bU3i');
-                    }
-                });
 
-                jQuery.ajax({
-                    // transmission daemon REST api
-                    url: 'http://localhost:9292/localhost:80/transmission/rpc',
-                    error: function(res){
-                        output( '#debug-output', 'warning', "jQuery AJAX Err: " + res );
-                    },
-                    success: function(res){
-                        output( '#debug-output', 'success', "jQuery AJAX OK: " + res );
-                    }
-                });
+                fetchTorrentData('X3bTJ7rAG00qNANlPZemveZTdq0H4kWYNq3NWw5h3vLQVdCo');
                 
             }
             
