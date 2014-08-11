@@ -111,4 +111,10 @@ html, body {
     color: white;
 }
 
+.output .info {
+    border: 1px solid rgb(0, 101, 211);
+    background-color: rgb(59, 163, 233);
+    color: white;
+}
+
 #demo-output { display: none; }
