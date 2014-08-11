@@ -22,12 +22,12 @@
 
     var mocketh = {
       eth: null,
-      getKey: function(cb){ cb(null, 'MockKey213dsf3454as')}
+      getKey: function(cb){ cb('MockKey213dsf3454as')}
     }
 
     var aleth = {
       eth: eth,
-      getKey: function(cb){ cb(null, eth.getKey() )}
+      getKey: function(cb){ cb( eth.getKey() )}
     }
 
     var ethereal = {
