@@ -1,194 +1,130 @@
 <html>
-	<head>
-		<title>d2 App</title>
-		<style>
+    <head>
+        <title>d2 App</title>
+        <script src="assets/poly-eth/index.js"></script>
+        <script src="assets/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" href="assets/style.css">
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+    <body onload="init();">
 
-			html, body {
-				margin: 0;
-				padding: 0;
-				font-family: sans-serif;
-				background-color: #B3D1FF;
-				font-size: 10px;
-			}
-			#header {
-				overflow: auto;
-				padding: 1em;
-				color: white;
-				background-color: #6AB8EC;
-				border-bottom: 1px solid rgba( 0,0,0, 0.3);
+        <div id="header">
+            <h1><i class="fa fa-file-text-o"></i> Dox</h1>
+            <div class="info">
+                <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">
+                    Documentation
+                </a>
+                (<a href="#" title="No torrent support yet in EtheremClient">Why a Magnet Link?</a>)
+            </div>          
+        </div>
 
-			}
-			#header a {
-				color: white;
-			}
-			#header h1 {
-				font-size: 2em;
-				float: left;
-				margin: 0;
-				line-height: 1.2em;
-			}
-			#header .info {
-				float: right;
-				font-size: 1.2em;
-				line-height: 2em;
-			}
-			
+        <div id="warning" class="output">
+            
+        </div>
 
-			#content {
-				
-				padding: 1em;
-			}
+        <div id="content">
+            <div id="view-form">
+                <input class="" type="text" value="12a3a3Ia43L5UAsaGSIDd" placeholder="Address">
+                <button class="submit">View</button>
+            </div>
+            <div id="feedback" class="output">
+                
+            </div>
+            <div id="view-output">              
 
-
-			#content #view-form {
-				height: 3em;
-				overflow: auto;
-				position: relative;
-				font-size: 1.6em;
-			}
-			#content #view-form input {
-				display: inline-block;
-				font-size: inherit;
-				border-radius: 0.4em;
-				position: absolute;
-				left: 0;
-				padding: 0.4em;
-				width: 70%;
-				box-sizing: border-box;
-				border: 1px solid rgba( 0,0,0, 0.3);
-				text-overflow: ellipsis;
-			}
-			#content #view-form button {
-				display: inline-block;
-				font-size: inherit;
-				position: absolute;
-				border-radius: 0.4em;
-				right: 0;
-				padding: 0.4em;
-				width: 25%;
-				box-sizing: border-box;
-				border: 0 none;
-				background-color: #347ABB;
-				font-weight: bold;
-				color: white;
-				cursor: pointer;
-			}
-
-			#content #view-output {
-				font-size: 1.6em;
-				min-height: 10em;
-				padding: 1em;
-				border-radius: 0.4em;
-				border: 1px solid rgba(0, 0, 0, 0.3);
-				background-color: white;
-				text-overflow: ellipsis;
-				overflow: hidden;
-			}
-
-			#warning {
-				padding: 1em 1em 0 1em;
-			}
-
-			#warning.hide { display: none; }
-
-			#warning .content {
-				font-size: 1.6em;
-				border: 1px solid rgb(211, 0, 0);
-				background-color: rgb(233, 59, 59);
-				color: white;
-				padding: 0.4em;
-			}
-			
-			#demo-output { display: none; }
-
-		</style>
-	</head>
-	<body onload="init();">
-
-		<div id="header">
-			<h1>Dox</h1>
-			<div class="info">
-				<a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">
-					Documentation
-				</a>
-				(<a href="#" title="No torrent support yet in EtheremClient">Why a Magnet Link?</a>)
-			</div>			
-		</div>
-
-		<div id="warning" class="hide">
-			<div class="content"></div>
-		</div>
-
-		<div id="content">
-			<div id="view-form">
-				<input class="" type="text" value="12a3a3Ia43L5UAsaGSIDd" placeholder="Address">
-				<button class="submit" onclick="handleViewClick();">View</button>
-			</div>
-			<div id="view-output">
-				
-				
-
-			</div>
-		</div>
+            </div>
+        </div>
 
 
 
+        <div id="debug-output" class="output">
+            
+        </div>
+
+        <div id="demo-output">              
+            Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a>
+            <p>
+                <code>
+                    magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc
+                </code>
+            </p>
+        </div>
 
 
-		<div id="demo-output">
-				
-			Documentation for (ADDRESS): <a href="magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce">Magnet Link</a>
+        <script type="text/javascript">
 
-			<p>
-				<code>
-					magnet:?xt=urn:btih:3EB0B04E8A6819A732BEAC1F738043E8793FD80F&dn=d2.md&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounc
-				</code>
-			</p>
+            var D2_CONTRACT_ADDRESS = "asdasd";
 
-		</div>
-		<script type="text/javascript">
+            function content_hash(address) {
+                alert( 'content_hash for ' + address )
+                var content_hash = eth.getStorageAt( D2_CONTRACT_ADDRESS, address ) || "No ETH Connection"
+                return content_hash;
+            }
 
-			var D2_CONTRACT_ADDRESS = "asdasd";
+            function handleViewClick() {
+                output( '#feedback', 'success', "Not connected, showing demo documentation in the meantime" );
+                document.querySelector("#view-output").innerHTML = document.querySelector("#demo-output").innerHTML;
+            }
 
-			function content_hash(address) {
-				alert( 'content_hash for ' + address )
-				var content_hash = eth.getStorageAt( D2_CONTRACT_ADDRESS, address ) || "No ETH Connection"
-				return content_hash;
-			}
+            function output (selector, classes, content) {
+                var output = document.querySelector( selector )
+                var out = document.createElement( 'div' );
+                var close = document.createElement( 'div' );
+                out.className = classes;
+                close.className = 'close fa fa-times-circle'
+                out.innerHTML = content;
+                out.appendChild( close );
+                output.appendChild( out );
 
-			function handleViewClick() {
-				if ( true ) {
-					document.querySelector("#feedback").className = ''
-					document.querySelector("#feedback .content").innerHTML = "Not connected, showing demo documentation in the meantime";
-					return;
-				}
-				document.querySelector("#view-output").innerHTML = document.querySelector("#demo-output").innerHTML;
-			}
+                close.onclick = function() {
+                    output.removeChild( out )
+                }
+            }
 
-			function init() {
+            function initUI () {
+                
+                if (typeof eth === 'undefined') {
+                    output( '#warning', 'warning', "No ETH Object Available. Dox must be run within an Ethereum Browser." );
+                    var e = polyeth()
+                } else {
+                    var e = polyeth(eth)
+                }
 
-				if (typeof eth ==='undefined') {
-					document.querySelector("#warning").className = ''
-					document.querySelector("#warning .content").innerHTML = "No ETH Object Available. Dox must be run within an Ethereum Browser.";
-					return;
-				}
+                if (e.eth) output( '#feedback', 'success', "Polyeth loaded, proxying eth." );
+                else output( '#feedback', 'success', "Polyeth Not loaded, mocking eth." );
 
 
-				eth.getKey(function(key){
-					document.querySelector("#key").innerHTML = key;
-				})
 
-				// document.querySelector("#debug").innerHTML = "";
-				// for (var x in eth) {
-				// 	   document.querySelector("#debug").innerHTML += "<strong>" + x + "</strong><pre>, " + eth[x].toString() + "</pre><br/>";
-				// }
+                jQuery('#view-form button').click( handleViewClick );
 
-				setTimeout( function(){
-					if (document.querySelector("#update").checked ) init()
-				}, 1000 );
-			}
+                e.getKey( function(key){
+                    output( "#debug-output", 'success', 'Key: ' + key );
+                });
 
-		</script>
-	</body>
+                $.ajaxSetup({
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-Transmission-Session-Id', 'X7IoQTkCsQliKn4cLQVPbxgwRNiodmdJBWynBntiMRb6bU3i');
+                    }
+                });
+
+                jQuery.ajax({
+                    // transmission daemon REST api
+                    url: 'http://localhost:9292/localhost:80/transmission/rpc',
+                    error: function(res){
+                        output( '#debug-output', 'warning', "jQuery AJAX Err: " + res );
+                    },
+                    success: function(res){
+                        output( '#debug-output', 'success', "jQuery AJAX OK: " + res );
+                    }
+                });
+                
+            }
+            
+            function init() { 
+                jQuery( document ).ready( initUI ); 
+            }
+
+        </script>
+    </body>
 </html>
 
