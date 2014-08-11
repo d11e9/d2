@@ -5,7 +5,7 @@
         <script src="assets/jquery-1.10.2.js"></script>
         <link rel="stylesheet" href="assets/style.css">
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-        <script src="http://localhost:9292/localhost:80/transmission/web/script/min/transmission.js?v=20130913"></script>
+        <script src="http://localhost:9091/transmission/web/script/min/transmission.js?v=20130913"></script>
     </head>
     <body onload="init();">
 
@@ -85,7 +85,7 @@
             function fetchTorrentData ( sessionId ) {
                 jQuery.ajax({
                     // transmission daemon REST api
-                    url: 'http://localhost:9292/localhost:80/transmission/rpc',
+                    url: 'http://localhost:9292/localhost:9091/transmission/rpc',
                     type: 'POST',
                     method: 'POST',
                     contentType: 'json',
@@ -130,7 +130,7 @@
                 });
 
 
-                fetchTorrentData('i1WsNsIGfDJ4arnv0o2SuXgUm7BQm00BxWT5Bk3QnBmZbM1U');
+                fetchTorrentData('X3bTJ7rAG00qNANlPZemveZTdq0H4kWYNq3NWw5h3vLQVdCo');
                 
             }
             
