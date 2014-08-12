@@ -1,0 +1,19 @@
+(return 0 
+  (lll 
+    (if (eq (calldataload 0) 109342978307173) 
+      (seq 
+        (sstore (caller) (calldataload 32))
+        (seq 
+          (set '_temp18_1 1)
+          (return (ref '_temp18_1) 32)
+        )
+      )
+      (seq 
+        (set '_temp24_1 0)
+        (return (ref '_temp24_1) 32)
+      )
+    )
+    0
+  )
+)
+
