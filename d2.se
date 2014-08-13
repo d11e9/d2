@@ -1,7 +1,50 @@
+
+
+// d2 ethereum contract v0.2
+
+init:
+
+  // Initialise contract storage
+  NAME = "Dox"
+  CONTENT_HASH = "<insert documentation content hash>"
+  
+  NAMEREG_ADDRESS = "<insert contract address"
+  NAMEREG_DOC_HASH = "<insert documentation content hash>"
+  
+  GAVCOIN_ADDRESS = "<insert contract address"
+  GAVCOIN_DOC_HASH = "<insert documentation content hash>"
+  
+  // Register self
+  call( NAMEREG_ADDRESS, [ "register", NAME ] )
+  contract.storage[contract.address] = CONTENT_HASH
+  
+  // Register documentation for already existing contracts
+  // ie: NameReg, GavCoin, etc.
+  contract.storage[NAMEREG_ADDRESS] = NAMEREG_DOC_HASH
+  contract.storage[GAVCOIN_ADDRESS] = GAVCOIN_DOC_HASH
+  
+code:
+
+  if msg.data[0] == 'register':
+  
+    // Register documentation
+    // data[1] should be content_hash TODO: torrent hash
+    contract.storage[msg.sender] = msg.data[1]
+    return(1)
+    
+  else:
+  
+    // Unknown action
+    return(0)
+
+
+
+// d2 ethereum contract v0.1 (depreciated)
+
 // param 0: action
-if msg.data[0] == "create":
-  // param 1: content hash
-  contract.storage[msg.sender] = msg.data[1]
-  return(1)
-else:
-  return(0)
+//if msg.data[0] == "create":
+  //// param 1: content hash
+  //contract.storage[msg.sender] = msg.data[1]
+  //return(1)
+//else:
+  //return(0)
